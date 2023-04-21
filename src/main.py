@@ -120,7 +120,8 @@ def main():
         '1. Search for a card',
         '2. Generate random card name',
         '3. Browse cards',
-        '4. Exit'
+        '4. Help',
+        '5. Exit'
     ]
 
     while True:
@@ -214,6 +215,9 @@ def main():
                     print('That is not a valid option, please try again...\n')
 
         elif user_input == '4':
+            print('Help screen goes here...')
+
+        elif user_input == '5':
             break
 
         else:
