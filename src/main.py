@@ -99,7 +99,7 @@ def generate_random_card_name():
 
 def get_list_of_cards(curr_page, page_size):
     """
-    Given a page and number of elements per page, returns a list of cards on 
+    Given a page and number of elements per page, returns a list of cards on
     that page.
     """
     cards = Card.where(q='set.id:base1', page=curr_page, pageSize=page_size)
@@ -109,9 +109,9 @@ def get_list_of_cards(curr_page, page_size):
 
 def main():
 
-    print('\n-----------------------------------------------------------------')
-    print('----------------------POKEMON CARD EXPLORER----------------------')
-    print('-----------------------------------------------------------------')
+    print('\n-------------------------------------------------------------')
+    print('--------------------POKEMON CARD EXPLORER--------------------')
+    print('-------------------------------------------------------------')
     print(
         '\nSelect an option by entering the option\'s corresponding number ' +
         'and then hitting Enter:')
@@ -188,7 +188,9 @@ def main():
                     print('\nP: Previous page | N: Next page | M: Main menu')
 
                 user_input = input('\nSelect an option: ')
-                if not user_input.isalpha() and int(user_input) in range(1, PAGE_SIZE+1):
+
+                if not user_input.isalpha() \
+                        and int(user_input) in range(1, PAGE_SIZE+1):
                     user_input = int(user_input)
                     print(parse_card_info(cards[user_input-1]))
                     print()
@@ -202,7 +204,10 @@ def main():
                         elif price_input.upper() == 'N':
                             break
                         else:
-                            print('That is not a valid option, please try again...')
+                            print(
+                                'That is not a valid option, ' +
+                                'please try again...'
+                            )
                             continue
                     break
                 elif str(user_input).upper() == 'M':
@@ -232,7 +237,9 @@ def main():
             )
             print()
             while True:
-                user_input = input('Would you like to return to the main menu (Y/N)? ')
+                user_input = input(
+                    'Would you like to return to the main menu (Y/N)? '
+                )
                 if user_input.upper() == 'Y':
                     break
                     print()
