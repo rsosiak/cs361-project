@@ -39,12 +39,12 @@ def parse_card_info(card):
     )
 
     output = (
-    f'Name: {name}\n'
-    f'Set Name: {set_name}\n'
-    f'Number: {id}\n'
-    f'Rarity: {rarity}\n'
-    f'Normal (Market Price): {tcgplayer_normal_market}\n'
-    f'Holofoil (Market Price): {tcgplayer_holofoil_market}'
+        f'Name: {name}\n'
+        f'Set Name: {set_name}\n'
+        f'Number: {id}\n'
+        f'Rarity: {rarity}\n'
+        f'Normal (Market Price): {tcgplayer_normal_market}\n'
+        f'Holofoil (Market Price): {tcgplayer_holofoil_market}'
     )
 
     return output
@@ -52,10 +52,10 @@ def parse_card_info(card):
 
 def parse_tcgplayer_card_price(price_obj, price_point):
     """
-    Given a card price object and price point, parses and returns card price, if
-    available. Returns N/A if price is None.
+    Given a card price object and price point, parses and returns card price,
+    if available. Returns N/A if price is None.
 
-    The available price points are: 'low', 'mid', 'high', 'market', 'directLow'.
+    Available price points are: 'low', 'mid', 'high', 'market', 'directLow'.
     """
 
     if price_obj:
@@ -93,7 +93,7 @@ def generate_random_card_name():
     num_cards_in_set = data.printedTotal
 
     card = Card.where(q=f'id:base1-{rand_num % num_cards_in_set}')[0]
-    
+
     return card.name
 
 
@@ -102,7 +102,7 @@ def get_list_of_cards(curr_page, page_size):
     Given a page and number of elements per page, returns a list of cards on 
     that page.
     """
-    cards = Card.where(q=f'set.id:base1', page=curr_page, pageSize=page_size)
+    cards = Card.where(q='set.id:base1', page=curr_page, pageSize=page_size)
 
     return cards
 
@@ -113,9 +113,9 @@ def main():
     print('----------------------POKEMON CARD EXPLORER----------------------')
     print('-----------------------------------------------------------------')
     print(
-        '\nSelect an option by entering the option\'s corresponding number and ' +
-        'then hitting Enter:')
-    
+        '\nSelect an option by entering the option\'s corresponding number ' +
+        'and then hitting Enter:')
+
     options = [
         '1. Search for a card',
         '2. Generate random card name',
@@ -137,17 +137,17 @@ def main():
             while True:
                 card_name = input('Please enter a card name: ')
                 card = search_for_card(card_name)
-            
+
                 if len(card) == 0:
                     print(
-                        "\nSorry, I wasn't able to find a card with that name, " +
-                        "please try again...")
+                        "\nSorry, I wasn't able to find a card with that " +
+                        "name, please try again...")
                 else:
                     card = card[0]
                     break
 
             print(parse_card_info(card))
-            
+
             while True:
                 price_input = input(
                     '\nWould you like to view more card prices (Y/N)? '
@@ -163,20 +163,20 @@ def main():
         elif user_input == '2':
             print('You selected "Generate random card name"\n')
             print(
-                f'Your randomly generated card name is: ' +
+                'Your randomly generated card name is: ' +
                 f'{generate_random_card_name()}' +
                 '\n'
             )
 
         elif user_input == '3':
             print('You selected "Browse cards"\n')
-            
+
             curr_page = 1
             PAGE_SIZE = 5
-            
+
             while True:
                 cards = get_list_of_cards(curr_page, PAGE_SIZE)
-                
+
                 for i, card in enumerate(cards):
                     print(f'{i%PAGE_SIZE+1}. {card.name}')
 
@@ -186,7 +186,7 @@ def main():
                     print('\nN: Next page | M: Main menu')
                 else:
                     print('\nP: Previous page | N: Next page | M: Main menu')
-                
+
                 user_input = input('\nSelect an option: ')
                 if not user_input.isalpha() and int(user_input) in range(1, PAGE_SIZE+1):
                     user_input = int(user_input)
@@ -215,14 +215,38 @@ def main():
                     print('That is not a valid option, please try again...\n')
 
         elif user_input == '4':
-            print('Help screen goes here...')
+            print()
+            print(
+                'Search for a card: User inputs a card name. If the card ' +
+                "exists, user will be presented with the card's attributes."
+            )
+            print(
+                'Generate random card name: User will be presented with a ' +
+                'random card name.'
+            )
+            print(
+                'Browse cards: User is presented with a list of cards. User ' +
+                'can select a card to view its attributes. User can also ' +
+                'page through lists by using the appropriate keyboard ' +
+                'commands.'
+            )
+            print()
+            while True:
+                user_input = input('Would you like to return to the main menu (Y/N)? ')
+                if user_input.upper() == 'Y':
+                    break
+                    print()
+                elif user_input.upper() == 'N':
+                    continue
+                else:
+                    print('That is not a valid option, please try again...\n')
 
         elif user_input == '5':
             break
 
         else:
             print('That is not a valid option, please try again...')
-    
+
     print('Goodbye!!\n')
 
     return
