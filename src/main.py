@@ -214,7 +214,8 @@ def main():
                     break
                 elif str(user_input).upper() == 'P' and curr_page > 1:
                     curr_page -= 1
-                elif str(user_input).upper() == 'N' and len(cards) == 10:
+                elif str(user_input).upper() == 'N'\
+                        and len(cards) == PAGE_SIZE:
                     curr_page += 1
                 else:
                     print('That is not a valid option, please try again...\n')
