@@ -1,6 +1,8 @@
 import os
 import random
 
+import zmq
+
 from dotenv import load_dotenv
 from pokemontcgsdk import Card, RestClient, Set
 
@@ -84,17 +86,17 @@ def parse_additional_prices(card):
     return output
 
 
-def generate_random_card_name():
-    """Generates a random card name."""
+# def generate_random_card_name():
+#     """Generates a random card name."""
 
-    rand_num = random.randint(1, 999999)
-    data = Set.where(q='id:base1')
-    data = data[0]
-    num_cards_in_set = data.printedTotal
+#     rand_num = random.randint(1, 999999)
+#     data = Set.where(q='id:base1')
+#     data = data[0]
+#     num_cards_in_set = data.printedTotal
 
-    card = Card.where(q=f'id:base1-{rand_num % num_cards_in_set}')[0]
+#     card = Card.where(q=f'id:base1-{rand_num % num_cards_in_set}')[0]
 
-    return card.name
+#     return card.name
 
 
 def get_list_of_cards(curr_page, page_size):
@@ -108,6 +110,10 @@ def get_list_of_cards(curr_page, page_size):
 
 
 def main():
+
+    context = zmq.Context()
+    socket = context.socket(zmq.REQ)
+    socket.connect('tcp://localhost:5555')
 
     print('\n-------------------------------------------------------------')
     print('--------------------POKEMON CARD EXPLORER--------------------')
@@ -161,10 +167,15 @@ def main():
                     print('That is not a valid option, please try again...\n')
 
         elif user_input == '2':
+            socket.send_string('2')
+            message = socket.recv()
+            message = message.decode('utf-8')
+
             print('You selected "Generate random card name"\n')
             print(
                 'Your randomly generated card name is: ' +
-                f'{generate_random_card_name()}' +
+                # f'{generate_random_card_name()}' +
+                f'{message}'
                 '\n'
             )
 
