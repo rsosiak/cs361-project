@@ -1,10 +1,9 @@
 import os
-import random
 
 import zmq
 
 from dotenv import load_dotenv
-from pokemontcgsdk import Card, RestClient, Set
+from pokemontcgsdk import Card, RestClient
 
 load_dotenv()
 
