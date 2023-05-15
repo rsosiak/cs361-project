@@ -160,7 +160,6 @@ def main():
             print('You selected "Generate random card name"\n')
             print(
                 'Your randomly generated card name is: ' +
-                # f'{generate_random_card_name()}' +
                 f'{message}'
                 '\n'
             )
