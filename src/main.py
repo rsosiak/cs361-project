@@ -85,19 +85,6 @@ def parse_additional_prices(card):
     return output
 
 
-# def generate_random_card_name():
-#     """Generates a random card name."""
-
-#     rand_num = random.randint(1, 999999)
-#     data = Set.where(q='id:base1')
-#     data = data[0]
-#     num_cards_in_set = data.printedTotal
-
-#     card = Card.where(q=f'id:base1-{rand_num % num_cards_in_set}')[0]
-
-#     return card.name
-
-
 def get_list_of_cards(curr_page, page_size):
     """
     Given a page and number of elements per page, returns a list of cards on
