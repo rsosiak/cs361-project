@@ -33,16 +33,20 @@ def generate_random_card_name():
 while True:
     print('Waiting for request...')
     time.sleep(1)
-    #  Wait for request from client
+
     request = socket.recv()
     request = request.decode('utf-8')
+
     print('Request received...')
+
     time.sleep(1)
+
     print('Generating Pokemon card...')
+
     time.sleep(1)
+
     if request == '2':
         name = generate_random_card_name()
-        #  Send reply back to client
         print(f'Sending {name} card to client...')
         socket.send_string(name)
     else:
