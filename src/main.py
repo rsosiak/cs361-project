@@ -145,6 +145,22 @@ def explore(user_input):
     return parse_list_for_output(arr)
 
 
+def display_pagination_message(card_arr, curr_page, page_size):
+    """
+    Given an array of cards, current page, and number of elements per page,
+    returns a string representing the appropriate pagination options.
+    """
+    if len(card_arr) < page_size:
+        output = '\nP: Previous page | M: Main menu'
+        return output
+    if curr_page == 1:
+        output = '\nN: Next page | M: Main menu'
+        return output
+
+    output = '\nP: Previous page | N: Next page | M: Main menu'
+    return output
+
+
 def main():
 
     print('\n-------------------------------------------------------------')
@@ -220,12 +236,13 @@ def main():
                 for i, card in enumerate(cards):
                     print(f'{i%PAGE_SIZE+1}. {card.name}')
 
-                if len(cards) < PAGE_SIZE:
-                    print('\nP: Previous page | M: Main menu')
-                elif curr_page == 1:
-                    print('\nN: Next page | M: Main menu')
-                else:
-                    print('\nP: Previous page | N: Next page | M: Main menu')
+                output = display_pagination_message(
+                    card_arr=cards,
+                    curr_page=curr_page,
+                    page_size=PAGE_SIZE
+                )
+
+                print(output)
 
                 user_input = input('\nSelect an option: ')
 
