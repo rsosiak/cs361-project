@@ -14,7 +14,6 @@ def search_for_card(name_input):
     """
     Given a card name, outputs a list of cards that match.
     """
-
     card = Card.where(q=f'set.id:base1 name:{name_input}')
 
     return card
@@ -25,7 +24,6 @@ def parse_card_info(card):
     Given a card object, parses the object and returns a string containing card
     attributes.
     """
-
     name = card.name
     set_name = card.set.name
     id = card.id.split('-')[1]
@@ -58,7 +56,6 @@ def parse_tcgplayer_card_price(price_obj, price_point):
 
     Available price points are: 'low', 'mid', 'high', 'market', 'directLow'.
     """
-
     if price_obj:
         price = str(getattr(price_obj, price_point))
         price = '{0:.2f}'.format(float(price))
@@ -73,7 +70,6 @@ def parse_additional_prices(card):
     """
     Given a card object, get additional prices.
     """
-
     tcgplayer_normal_low = parse_tcgplayer_card_price(
         card.tcgplayer.prices.normal, 'low'
     )
@@ -91,7 +87,6 @@ def get_list_of_cards(curr_page, page_size):
     that page.
     """
     cards = Card.where(q='set.id:base1', page=curr_page, pageSize=page_size)
-
     return cards
 
 
@@ -99,6 +94,7 @@ def get_set_names():
     """Returns a list of card set names."""
     sets = Set.all()
     sets = [c_set.name for c_set in sets]
+
     return sets
 
 
@@ -158,6 +154,7 @@ def display_pagination_message(card_arr, curr_page, page_size):
         return output
 
     output = '\nP: Previous page | N: Next page | M: Main menu'
+
     return output
 
 
@@ -177,6 +174,7 @@ def display_additional_card_prices(user_input, card):
 
     output = 'That is not a valid option, please try again...'
     print(output)
+
     return
 
 
@@ -283,7 +281,6 @@ def main():
 
                         if display_input in ('Y', 'N'):
                             break
-                    # break
                 elif str(user_input).upper() == 'M':
                     break
                 elif str(user_input).upper() == 'P' and curr_page > 1:
