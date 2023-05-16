@@ -127,8 +127,22 @@ def get_random_card_name():
     return message
 
 
-def explore():
-    return
+def explore(user_input):
+    """
+    Given a string input chosen by the user, returns a string containing the
+    appropriate list of cards.
+    """
+    if user_input == '1':
+        arr = get_set_names()
+    elif user_input == '2':
+        arr = Type.all()
+    elif user_input == '3':
+        arr = Rarity.all()
+    else:
+        output = 'That is not a valid option, please try againn...\n'
+        return output
+
+    return parse_list_for_output(arr)
 
 
 def main():
@@ -263,28 +277,11 @@ def main():
                 user_input = input('What would you like to explore? ')
                 print()
 
-                if user_input == '1':
-                    sets = get_set_names()
-                    arr_str = parse_list_for_output(sets)
-                    print(arr_str)
-                    print()
-                    break
-                elif user_input == '2':
-                    types = Type.all()
-                    arr_str = parse_list_for_output(types)
-                    print(arr_str)
-                    print()
-                    break
-                elif user_input == '3':
-                    rarities = Rarity.all()
-                    arr_str = parse_list_for_output(rarities)
-                    print(arr_str)
-                    print()
-                    break
-                elif user_input == '4':
+                if user_input == '4':
                     break
                 else:
-                    print('That is not a valid option, please try again...\n')
+                    output = explore(user_input)
+                    print(output)
 
         elif user_input == '5':
             print()
