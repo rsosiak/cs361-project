@@ -95,11 +95,43 @@ def get_list_of_cards(curr_page, page_size):
     return cards
 
 
-def main():
+def get_set_names():
+    """Returns a list of card set names."""
+    sets = Set.all()
+    sets = [c_set.name for c_set in sets]
+    return sets
 
+
+def parse_list_for_output(arr):
+    """
+    Given a list, iterates through each element in the list, and creates string
+    output.
+    """
+    output = ''
+    for el in arr:
+        output += f'- {el}\n'
+
+    return output
+
+
+def get_random_card_name():
+    """Generates a random card name."""
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
     socket.connect('tcp://localhost:5555')
+
+    socket.send_string('2')
+    message = socket.recv()
+    message = message.decode('utf-8')
+
+    return message
+
+
+def explore():
+    return
+
+
+def main():
 
     print('\n-------------------------------------------------------------')
     print('--------------------POKEMON CARD EXPLORER--------------------')
@@ -154,14 +186,11 @@ def main():
                     print('That is not a valid option, please try again...\n')
 
         elif user_input == '2':
-            socket.send_string('2')
-            message = socket.recv()
-            message = message.decode('utf-8')
-
+            rng_card = get_random_card_name()
             print('You selected "Generate random card name"\n')
             print(
                 'Your randomly generated card name is: ' +
-                f'{message}'
+                f'{rng_card}'
                 '\n'
             )
 
@@ -235,24 +264,21 @@ def main():
                 print()
 
                 if user_input == '1':
-                    sets = Set.all()
-                    for c_set in sets:
-                        set_name = c_set.name
-                        release_date = c_set.releaseDate
-                        print('{:<40s} {:<25s}'.format(set_name, release_date))
+                    sets = get_set_names()
+                    arr_str = parse_list_for_output(sets)
+                    print(arr_str)
                     print()
                     break
                 elif user_input == '2':
                     types = Type.all()
-                    for type in types:
-                        print(f'- {type}')
+                    arr_str = parse_list_for_output(types)
+                    print(arr_str)
                     print()
                     break
                 elif user_input == '3':
-                    print()
                     rarities = Rarity.all()
-                    for rarity in rarities:
-                        print(f'- {rarity}')
+                    arr_str = parse_list_for_output(rarities)
+                    print(arr_str)
                     print()
                     break
                 elif user_input == '4':
