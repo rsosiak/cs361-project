@@ -3,7 +3,7 @@ import os
 import zmq
 
 from dotenv import load_dotenv
-from pokemontcgsdk import Card, RestClient
+from pokemontcgsdk import Card, Rarity, RestClient, Set, Type
 
 load_dotenv()
 
@@ -111,9 +111,10 @@ def main():
     options = [
         '1. Search for a card',
         '2. Generate random card name',
-        '3. Browse cards',
-        '4. Help',
-        '5. Exit'
+        '3. Browse individual cards',
+        '4. Explore cards',
+        '5. Help',
+        '6. Exit'
     ]
 
     while True:
@@ -217,6 +218,49 @@ def main():
                     print('That is not a valid option, please try again...\n')
 
         elif user_input == '4':
+            print('You selected "Explore cards"\n')
+
+            explorables = [
+                '1. Explore card sets',
+                '2. Explore card types',
+                '3. Explore card rarities',
+                '4. Return to main menu'
+            ]
+
+            while True:
+                for explorable in explorables:
+                    print(explorable)
+                print()
+                user_input = input('What would you like to explore? ')
+                print()
+
+                if user_input == '1':
+                    sets = Set.all()
+                    for c_set in sets:
+                        set_name = c_set.name
+                        release_date = c_set.releaseDate
+                        print('{:<40s} {:<25s}'.format(set_name, release_date))
+                    print()
+                    break
+                elif user_input == '2':
+                    types = Type.all()
+                    for type in types:
+                        print(f'- {type}')
+                    print()
+                    break
+                elif user_input == '3':
+                    print()
+                    rarities = Rarity.all()
+                    for rarity in rarities:
+                        print(f'- {rarity}')
+                    print()
+                    break
+                elif user_input == '4':
+                    break
+                else:
+                    print('That is not a valid option, please try again...\n')
+
+        elif user_input == '5':
             print()
             print(
                 'Search for a card: User inputs a card name. If the card ' +
@@ -232,20 +276,25 @@ def main():
                 'page through lists by using the appropriate keyboard ' +
                 'commands.'
             )
+            print(
+                'Explore cards: User is presented with list of choices. ' +
+                'User can select one of the choices and will be provided ' +
+                'with a list corresponding to their choice.'
+            )
             print()
             while True:
                 user_input = input(
                     'Would you like to return to the main menu (Y/N)? '
                 )
                 if user_input.upper() == 'Y':
-                    break
                     print()
+                    break
                 elif user_input.upper() == 'N':
                     continue
                 else:
                     print('That is not a valid option, please try again...\n')
 
-        elif user_input == '5':
+        elif user_input == '6':
             break
 
         else:
