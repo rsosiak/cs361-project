@@ -161,6 +161,25 @@ def display_pagination_message(card_arr, curr_page, page_size):
     return output
 
 
+def display_additional_card_prices(user_input, card):
+    """
+    Given a user input and a card object, generates output if the user wants
+    to see additional card price information.
+    """
+    if user_input.upper() == 'Y':
+        output = parse_additional_prices(card)
+        print(output)
+        print()
+        return user_input.upper()
+    if user_input.upper() == 'N':
+        print()
+        return user_input.upper()
+
+    output = 'That is not a valid option, please try again...'
+    print(output)
+    return
+
+
 def main():
 
     print('\n-------------------------------------------------------------')
@@ -207,13 +226,14 @@ def main():
                 price_input = input(
                     '\nWould you like to view more card prices (Y/N)? '
                 )
-                if price_input.upper() == 'Y':
-                    print(f'{parse_additional_prices(card)}\n')
+
+                display_input = display_additional_card_prices(
+                    user_input=price_input,
+                    card=card,
+                )
+
+                if display_input in ('Y', 'N'):
                     break
-                elif price_input.upper() == 'N':
-                    break
-                else:
-                    print('That is not a valid option, please try again...\n')
 
         elif user_input == '2':
             rng_card = get_random_card_name()
@@ -255,18 +275,15 @@ def main():
                         price_input = input(
                             'Would you like to view more card prices (Y/N)? '
                         )
-                        if price_input.upper() == 'Y':
-                            print(parse_additional_prices(card))
+
+                        display_input = display_additional_card_prices(
+                            user_input=price_input,
+                            card=card,
+                        )
+
+                        if display_input in ('Y', 'N'):
                             break
-                        elif price_input.upper() == 'N':
-                            break
-                        else:
-                            print(
-                                'That is not a valid option, ' +
-                                'please try again...'
-                            )
-                            continue
-                    break
+                    # break
                 elif str(user_input).upper() == 'M':
                     break
                 elif str(user_input).upper() == 'P' and curr_page > 1:
